@@ -1,12 +1,12 @@
-import NextAuth from "next-auth"
-import SpotifyProvider from "next-auth/providers/spotify"
+import NextAuth from "next-auth";
+import SpotifyProvider from "next-auth/providers/spotify";
 
 /**
  * Takes a token, and returns a new token with updated
  * `accessToken` and `accessTokenExpires`. If an error occurs,
  * returns the old token and an error property
  */
- async function refreshAccessToken(token) {
+async function refreshAccessToken(token) {
   try {
     const url =
       "https://accounts.spotify.com/api/token?" +
@@ -47,19 +47,15 @@ import SpotifyProvider from "next-auth/providers/spotify"
 }
 
 export default NextAuth({
-  // Configure one or more authentication providers
   providers: [
     SpotifyProvider({
       clientId: process.env.SPOTIFY_CLIENT_ID,
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
       authorization:
-      "https://accounts.spotify.com/authorize?scope=user-read-email,playlist-read-private,user-read-email,streaming,user-read-private,user-library-read,user-library-modify,user-read-playback-state,user-modify-playback-state,user-read-recently-played,user-follow-read",
+        "https://accounts.spotify.com/authorize?scope=user-read-email,playlist-read-private,user-read-email,streaming,user-read-private,user-library-read,user-library-modify,user-read-playback-state,user-modify-playback-state,user-read-recently-played,user-follow-read",
     }),
-    // ...add more providers here
   ],
-  pages:{
-    signIn: "/auth/signin",
-  },
+
   callbacks: {
     async jwt({ token, user, account }) {
       // Initial sign in
@@ -88,4 +84,4 @@ export default NextAuth({
       return session;
     },
   },
-})
+});

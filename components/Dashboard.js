@@ -1,12 +1,12 @@
-import React from 'react'
-import SpotifyWebApi from 'spotify-web-api-node';
-import Body from './Body'
-import Right from './Right'
-import Sidebar from './Sidebar'
+import Sidebar from "./Sidebar";
+import { useEffect, useState } from "react";
+import SpotifyWebApi from "spotify-web-api-node";
+import { useSession } from "next-auth/react";
+import Player from "./Player";
 import { playingTrackState } from "../atoms/playerAtom";
 import { useRecoilState } from "recoil";
-import Player from './Player';
-import { useEffect, useState } from "react";
+import Body from "./Body";
+import Right from "./Right";
 
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.SPOTIFY_CLIENT_ID,
@@ -27,19 +27,24 @@ function Dashboard() {
     setPlayingTrack(track);
   };
 
-  return (
-   <main className="flex min-h-screen min-w-max bg-black lg:pb-24">
-     <Sidebar/>
-     <Body spotifyApi={spotifyApi} chooseTrack={chooseTrack}/>
-     <Right spotifyApi={spotifyApi} chooseTrack={chooseTrack}/>
+  useEffect(() => {
+    if (!accessToken) return;
+    spotifyApi.setAccessToken(accessToken);
+  }, [accessToken]);
 
-     {showPlayer && (
+  return (
+    <main className="flex min-h-screen min-w-max bg-black lg:pb-24">
+      <Sidebar />
+      <Body chooseTrack={chooseTrack} spotifyApi={spotifyApi} />
+      <Right chooseTrack={chooseTrack} spotifyApi={spotifyApi} />
+
+      {showPlayer && (
         <div className="fixed bottom-0 left-0 right-0 z-50">
           <Player accessToken={accessToken} trackUri={playingTrack.uri} />
         </div>
       )}
-   </main>
-  )
+    </main>
+  );
 }
 
-export default Dashboard
+export default Dashboard;

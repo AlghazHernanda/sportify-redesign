@@ -1,8 +1,18 @@
-import React from 'react'
-import { useRecoilState } from 'recoil';
 import { useEffect } from "react";
 import SpotifyPlayer from "react-spotify-web-playback";
+import { useRecoilState } from "recoil";
 import { playingTrackState, playState } from "../atoms/playerAtom";
+import {
+  BsFillPlayFill,
+  BsFillSkipEndFill,
+  BsFillSkipStartFill,
+} from "react-icons/bs";
+import { FiVolume2 } from "react-icons/fi";
+import { RiPlayList2Fill, RiComputerLine } from "react-icons/ri";
+import { MdOutlineSpeaker } from "react-icons/md";
+import { BiShuffle } from "react-icons/bi";
+import { IoRepeatOutline } from "react-icons/io5";
+import { CgArrowsExpandRight } from "react-icons/cg";
 
 function Player({ accessToken, trackUri }) {
   const [play, setPlay] = useRecoilState(playState);
@@ -15,7 +25,6 @@ function Player({ accessToken, trackUri }) {
   }, [trackUri]);
 
   if (!accessToken) return null;
-
 
   return (
     <>
@@ -47,6 +56,7 @@ function Player({ accessToken, trackUri }) {
             <BsFillSkipEndFill className="playerIcon" />
             <IoRepeatOutline className="playerIcon" />
           </div>
+
           <div className="flex items-center space-x-2.5 text-xs text-[#CECECE]">
             <h4 className="-mt-0.5">0:00</h4>
             <div className="bg-[#383838] w-72 lg:w-[450px] h-1 rounded-xl" />
@@ -100,4 +110,4 @@ function Player({ accessToken, trackUri }) {
   );
 }
 
-export default Player
+export default Player;

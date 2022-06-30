@@ -1,5 +1,5 @@
-import React from 'react'
-import { useRecoilState } from 'recoil';
+import { useRecoilState } from "recoil";
+import { playingTrackState, playState } from "../atoms/playerAtom";
 
 function RecentlyPlayed({ track, chooseTrack }) {
   const [play, setPlay] = useRecoilState(playState);
@@ -32,4 +32,4 @@ function RecentlyPlayed({ track, chooseTrack }) {
   );
 }
 
-export default RecentlyPlayed
+export default RecentlyPlayed;
